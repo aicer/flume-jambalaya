@@ -1,1 +1,48 @@
-<!--- --->
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.aicer.flume</groupId>
+  <artifactId>apache-flume-jambalaya</artifactId>
+  <version>0.8.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Apache Flume Jambalaya</name>
+  <description>An Apache Flume plugin that contains a variety of sources, interceptors, channels, sinks, serializers and other components designed to extend the Flume architecture</description>
+  <inceptionYear>2013</inceptionYear>
+  <organization>
+    <name>American Institute for Computing Education and Research Inc</name>
+  </organization>
+  <parent>
+    <groupId>org.aicer</groupId>
+    <artifactId>oss-pom-java-library</artifactId>
+    <version>4</version>
+  </parent>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>israelekpo</id>
+      <name>Israel Ekpo</name>
+      <email>israel@aicer.org</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git@github.com:aicer/flume-jambalaya.git</connection>
+    <developerConnection>scm:git:git@github.com:aicer/flume-jambalaya.git</developerConnection>
+    <url>https://github.com/aicer/flume-jambalaya.git</url>
+  </scm>
+  <properties>
+    <apache.flume.version>1.4.0</apache.flume.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
+    </dependency>
+  </dependencies>
+</project>
