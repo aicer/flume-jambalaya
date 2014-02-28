@@ -47,6 +47,8 @@ $ ./generate-plugin.sh
 ```
 ### File Source ###
 
+The Jambalaya plugin contains a source named FileSource.
+
 This source lets you ingest data by tailing files from a specific path. 
 
 Currently, it is only able to watch one file at a time.
@@ -59,6 +61,7 @@ Here is a sample configuration showing how the different options can be specifie
 
 ```shell
 
+# Since this is a custom source, you will have to specify the FQCN for the source.
 # Configuring the Sources (Our custom source)
 jambalaya.sources.s1.type = org.apache.flume.source.file.FileSource
 
