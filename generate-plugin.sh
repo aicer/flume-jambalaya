@@ -1,12 +1,12 @@
 #!/bin/bash
 
-M2_REPO="/home/iekpo/.m2/repository"
+FLUME_HOME="/opt/flume"
 
 MAIN_ARTIFACT="target/apache-flume-jambalaya-0.8.0-SNAPSHOT.jar"
 
 EXTERNAL_LIBS="target/lib/*.jar"
 
-STAGING_FOLDER="/opt/flume/plugins.d/apache-flume-jambalaya"
+STAGING_FOLDER="/$FLUME_HOME/plugins.d/apache-flume-jambalaya"
 
 LIB_FOLDER="$STAGING_FOLDER/lib"
 
