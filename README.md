@@ -40,6 +40,9 @@ $ cd flume-jambalaya
 
 $ mvn clean package
 
+# This assembles all the dependencies and installs the plugin in the $FLUME_HOME/plugins.d directory
+
+$ ./generate-plugin.sh
 
 ```
 ### File Source ###
