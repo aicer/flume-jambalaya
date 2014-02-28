@@ -44,15 +44,30 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
   private boolean startFromEnd = false;
   private long delayMillis = 100L;
 
+  /* Executor for the event generator (producer) */
   private ScheduledExecutorService fileTailerExecutor;
+
+  /* Executor for the event extractor (consumer) */
   private ScheduledExecutorService eventExtractorExecutor;
 
+  /* Queue where extracted events are stored temporarily */
   private Queue<String> queue;
+
+  /* Binary semaphore used to protect critical sections (queue) */
   private Semaphore mutex;
+
+  /* Tailer that watches the log files for new events */
   private Tailer tailer;
 
+  /* MonitoredCounterGroup object used for keeping track of internal metrics using atomic integers */
   private SourceCounter sourceCounter;
 
+  /**
+   * Setting up the Source object using values from the configuration file
+   *
+   * @param Context a key value store used to pass in configuration information
+   * @return
+   */
   @Override
   public synchronized void configure(Context context) {
 
@@ -77,6 +92,8 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
     this.queue = new LinkedList<String>();
     this.mutex = new Semaphore(1, true);
 
+    /* Creates a single-threaded executor that can schedule commands
+     * to run after a given delay */
     this.fileTailerExecutor = Executors.newSingleThreadScheduledExecutor();
     this.eventExtractorExecutor = Executors.newSingleThreadScheduledExecutor();
 
@@ -85,6 +102,14 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
     this.tailer = new Tailer(new File(filePath), listener, delayMillis, startFromEnd);
     FileSourceEventConsumer eventExtractorCommand = new FileSourceEventConsumer();
 
+    /**
+     * Creates and executes a periodic action that becomes enabled first
+     * after the given initial delay, and subsequently with the
+     * given delay between the termination of one execution and the
+     * commencement of the next.  If any execution of the task
+     * encounters an exception, subsequent executions are suppressed.
+     * Otherwise, the task will only terminate via cancellation or
+     * termination of the executor. */
     this.fileTailerExecutor.scheduleWithFixedDelay(tailer, INITIAL_DELAY_MS, POLL_DELAY_MS, TimeUnit.MILLISECONDS);
     this.eventExtractorExecutor.scheduleWithFixedDelay(eventExtractorCommand, INITIAL_DELAY_MS, POLL_DELAY_MS, TimeUnit.MILLISECONDS);
 
@@ -95,6 +120,7 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
   @Override
   public synchronized void stop() {
 
+    ///////////////////////////////////////////////////////////////////////////
     this.fileTailerExecutor.shutdown();
 
     try {
@@ -105,6 +131,7 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
 
     this.fileTailerExecutor.shutdownNow();
 
+    //////////////////////////////////////////////////////////////////////'////
     this.eventExtractorExecutor.shutdown();
 
     try {
@@ -115,6 +142,7 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
 
     this.eventExtractorExecutor.shutdownNow();
 
+    ///////////////////////////////////////////////////////////////////////////
     super.stop();
     sourceCounter.stop();
 
@@ -127,9 +155,7 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
 
     headers.put(FILE_PATH, filePath);
 
-    final Event event = EventBuilder.withBody(rawEvent.getBytes(), headers);
-
-    return event;
+    return EventBuilder.withBody(rawEvent.getBytes(), headers);
   }
 
   /**
@@ -187,9 +213,7 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
       }
 
       logger.debug("No more events in the queue. Shutting down consumer");
-
     }
-
   }
 
 
