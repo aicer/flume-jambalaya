@@ -86,6 +86,11 @@
       <version>2.1</version>
     </dependency>
     <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.2</version>
+    </dependency>
+    <dependency>
     <groupId>org.apache.flume.flume-ng-sinks</groupId>
     <artifactId>flume-ng-elasticsearch-sink</artifactId>
     <version>1.4.0</version>

@@ -66,7 +66,6 @@ public class FileSource extends AbstractSource implements Configurable, EventDri
    * Setting up the Source object using values from the configuration file
    *
    * @param Context a key value store used to pass in configuration information
-   * @return
    */
   @Override
   public synchronized void configure(Context context) {
