@@ -131,7 +131,9 @@ public class ElasticSearchHTTPSink extends AbstractSink implements Configurable 
 
         // If one or more of the bulk items had a failure
         if (bulkResponse.hasFailures()) {
-          throw new EventDeliveryException(bulkResponse.buildFailureMessage());
+          final String failureMessage = bulkResponse.buildFailureMessage();
+          logger.error("Failure Message: " + failureMessage);
+          throw new EventDeliveryException(failureMessage);
         }
       }
 
