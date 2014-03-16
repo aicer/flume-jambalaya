@@ -78,3 +78,58 @@ jambalaya.sources.s1.delayMillis = 100
 jambalaya.sources.s1.startFromEnd = true
 
 ```
+
+
+### ElasticSearch HTTP Sink ###
+
+
+This sink sends events to an ElasticSearch cluster via HTTP.
+
+The events are constructed in a format that is compatible for display with the Kibana graphical interface.
+
+Since the ElasticSearch binary client is not used, you can use any version of ElasticSearch on the server that is compatible with the API specifications assumed by the client.
+
+You no longer have to match the major version of the client JAR with that of the server and ensure that both are running the same minor version of the JVM. 
+
+SerializationExceptions used to occur if this is not the case.
+
+Events will be written to a new index every day. 
+
+The name will be <indexName>-yyyy-MM-dd where <indexName> is the indexName parameter. 
+
+The sink will start writing to a new index at midnight UTC.
+
+The type for this sink is the FQCN org.apache.flume.sink.elasticsearch.http.ElasticSearchHTTPSink
+
+Here is a sample configuration file for the sink
+
+```shell
+
+# Binding the Channels to the Sink
+jambalaya.sinks.k1.channel = c1
+
+# Configuring which sink the events are going out to
+jambalaya.sinks.k1.type = org.apache.flume.sink.elasticsearch.http.ElasticSearchHTTPSink
+
+# The hostname of the ElasticSearch server
+jambalaya.sinks.k1.hostName = localhost
+
+# The HTTP port number for the ElasticSearch server
+jambalaya.sinks.k1.port = 9200
+
+# The index prefix on the ElasticSearch server
+jambalaya.sinks.k1.indexName = flume
+
+# The mapping within the index
+jambalaya.sinks.k1.indexType = log
+
+# The maximum number of events sent to the ElasticSearch server per transaction
+jambalaya.sinks.k1.batchSize = 32
+
+# The serializer that converts Flume events into JSON objects that are sent to the ElasticSearch server
+jambalaya.sinks.k1.serializer = org.apache.flume.sink.elasticsearch.http.ElasticSearchHTTPDynamicEventSerializer
+
+# The name of the body field for each log event sent to the server
+jambalaya.sinks.k1.serializer.bodyFieldName = body
+
+```
