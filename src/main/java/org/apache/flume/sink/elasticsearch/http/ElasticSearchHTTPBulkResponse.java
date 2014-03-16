@@ -36,16 +36,20 @@ public class ElasticSearchHTTPBulkResponse {
 
   public boolean hasFailures() {
 
-
     if (responseObject != null) {
 
+      // Cycle through the items and return failure if one of them has an error
       for (BulkResponseItem item : this.responseObject.getResponseItems()) {
 
-        if (false == item.getCreateResponseItemDetails().isOk()){
+        // If one of the items contains an error
+        if (item.isFailure()){
 
           return true;
         }
       }
+
+      // At the completion of the loop, if none of the create response items had an error (all of them have ok:true)
+      return false;
     }
 
     return true;
@@ -57,9 +61,10 @@ public class ElasticSearchHTTPBulkResponse {
 
       String failureMessage = "";
 
+        // Cycle through and extract error messages from failed items
         for (BulkResponseItem item : this.responseObject.getResponseItems()) {
 
-          if (false == item.getCreateResponseItemDetails().isOk()){
+          if (item.isFailure()){
 
             failureMessage += item.getCreateResponseItemDetails().toString() + "\n";
           }
@@ -88,10 +93,13 @@ public class ElasticSearchHTTPBulkResponse {
 
     private String _id = null;
 
+    // One by default.
     private int _version = 1;
 
+    // False by default in case it is not present in the response
     private boolean ok = false;
 
+    // Null by default unless the item has failures
     private String error = null;
 
     @Override
@@ -145,6 +153,10 @@ public class ElasticSearchHTTPBulkResponse {
 
     public BulkCreateResponseItemDetails getCreateResponseItemDetails() {
       return this.create;
+    }
+
+    public boolean isFailure() {
+      return (false == create.isOk());
     }
   }
 

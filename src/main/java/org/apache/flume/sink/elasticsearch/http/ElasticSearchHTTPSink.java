@@ -126,6 +126,8 @@ public class ElasticSearchHTTPSink extends AbstractSink implements Configurable 
 
         sinkCounter.addToEventDrainAttemptCount(size);
 
+        logger.info("Attempting to transmit " + size + " events to ElasticSearch");
+
         // Attempt to transmit bulk request to ElasticSearch server
         ElasticSearchHTTPBulkResponse bulkResponse = client.execute();
 
@@ -143,6 +145,8 @@ public class ElasticSearchHTTPSink extends AbstractSink implements Configurable 
       sinkCounter.addToEventDrainSuccessCount(size);
 
       counterGroup.incrementAndGet("transaction.success");
+
+      logger.info("Sucessfully sent " + size + " events to ElasticSearch");
 
     } catch (Throwable ex) {
       try {
@@ -165,6 +169,8 @@ public class ElasticSearchHTTPSink extends AbstractSink implements Configurable 
             "Failed to commit transaction. Transaction rolled back.", ex);
       }
     } finally {
+
+      logger.info("Closing channel transaction ");
       // Marks the end of the transaction boundary for the current channel operation
       txn.close();
     }
