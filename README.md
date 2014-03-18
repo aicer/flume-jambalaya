@@ -139,6 +139,8 @@ jambalaya.sinks.k1.serializer.bodyFieldName = body
 
 The date interceptor is used for parsing dates from fields and using that date or timestamp as the timestamp for the Flume event.
 
+The parsed date can then be injected into the 'timestamp' header for the Flume Event.
+
 The type for this interceptor is the FQCN of the Builder
 
 
@@ -173,4 +175,37 @@ jambalaya.sources.s1.interceptors.datefilter.locale.country = US
 
 ```
 
+
+
+### Pattern Extractor Interceptor ###
+
+This interceptor is very useful in matching regular expressions within the header field or body of the event.
+
+The pattern matched can then be extracted from the source and injected into the destination header field.
+
+It is very useful for extracting dates from old log events in combination with the DateInterceptor.
+
+The type for the interceptor is its FQCN org.apache.flume.interceptor.PatternExtractorInterceptor$Builder
+
+Here is a sample configuration for the the pattern extractor interceptor
+
+
+```
+# The name of the interceptor
+jambalaya.sources.s1.interceptors = grok
+
+# The type for the interceptor
+jambalaya.sources.s1.interceptors.grok.type = org.apache.flume.interceptor.PatternExtractorInterceptor$Builder
+
+# The pattern to match in the source field
+jambalaya.sources.s1.interceptors.grok.pattern = \\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}
+
+# The source of the pattern (the name of the field in the header) or the body of the event
+# If no field name in the header is specified it matches it against the body of the event
+jambalaya.sources.s1.interceptors.grok.source = body
+
+# The destination field in the header
+jambalaya.sources.s1.interceptors.grok.destination = logtime
+
+```
 
