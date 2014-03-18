@@ -133,3 +133,44 @@ jambalaya.sinks.k1.serializer = org.apache.flume.sink.elasticsearch.http.Elastic
 jambalaya.sinks.k1.serializer.bodyFieldName = body
 
 ```
+
+
+### Date Interceptor ###
+
+The date interceptor is used for parsing dates from fields and using that date or timestamp as the timestamp for the Flume event.
+
+The type for this interceptor is the FQCN of the Builder
+
+
+Here is a sample configuration for this interceptor
+
+```
+# The name of the interceptor
+jambalaya.sources.s1.interceptors = datefilter
+
+# The type for the interceptor
+jambalaya.sources.s1.interceptors.datefilter.type = org.apache.flume.interceptor.DateInterceptor$Builder
+
+# The source of the timestamp (the name of the field in the header)
+jambalaya.sources.s1.interceptors.datefilter.source = logtime
+
+# The destination field (by default it is the timestamp field)
+jambalaya.sources.s1.interceptors.datefilter.destination = timestamp
+
+# The Joda Time compatible date format
+# http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html
+jambalaya.sources.s1.interceptors.datefilter.dateFormat = yyyy-MM-dd HH:mm:ss
+
+# The Joda Time compatible Timezone
+# http://joda-time.sourceforge.net/timezones.html
+jambalaya.sources.s1.interceptors.datefilter.timezone = America/Los_Angeles
+
+# The locale Language (en by default)
+jambalaya.sources.s1.interceptors.datefilter.locale.language = en
+
+# The locale Country (US by default)
+jambalaya.sources.s1.interceptors.datefilter.locale.country = US
+
+```
+
+
