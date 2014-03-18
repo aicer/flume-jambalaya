@@ -131,7 +131,7 @@ public class DateInterceptor implements Interceptor {
       localeContext.putAll(context.getSubProperties(LOCALE_PREFIX));
 
       String localeLanguage = "en";
-      String localeCountry = "";
+      String localeCountry = "US";
       String localeVariant = "";
 
       if (StringUtils.isNotBlank(localeContext.getString(LOCALE_LANGUAGE))) {
