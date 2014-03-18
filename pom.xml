@@ -38,8 +38,8 @@
   <properties>
     <apache.flume.version>1.4.0</apache.flume.version>
   </properties>
-<build>
-<plugins>
+  <build>
+    <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -61,9 +61,7 @@
         </executions>
       </plugin>
     </plugins>
-</build>
-
-
+  </build>
   <dependencies>
     <dependency>
       <groupId>log4j</groupId>
@@ -91,9 +89,14 @@
       <version>2.2.2</version>
     </dependency>
     <dependency>
-    <groupId>org.apache.flume.flume-ng-sinks</groupId>
-    <artifactId>flume-ng-elasticsearch-sink</artifactId>
-    <version>1.4.0</version>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>2.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.flume.flume-ng-sinks</groupId>
+      <artifactId>flume-ng-elasticsearch-sink</artifactId>
+      <version>1.4.0</version>
     </dependency>
   </dependencies>
 </project>
