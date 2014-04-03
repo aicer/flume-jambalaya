@@ -78,6 +78,11 @@
       <artifactId>hibiscus-http-client</artifactId>
       <version>0.6.2</version>
     </dependency>
+     <dependency>
+      <groupId>org.aicer.grok</groupId>
+      <artifactId>grok</artifactId>
+      <version>0.9.0</version>
+    </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
@@ -92,11 +97,6 @@
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>2.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.flume.flume-ng-sinks</groupId>
-      <artifactId>flume-ng-elasticsearch-sink</artifactId>
-      <version>1.4.0</version>
     </dependency>
   </dependencies>
 </project>
